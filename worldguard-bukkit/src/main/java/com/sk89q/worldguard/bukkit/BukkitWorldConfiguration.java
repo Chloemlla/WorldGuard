@@ -39,6 +39,7 @@ import com.sk89q.worldguard.bukkit.internal.TargetMatcherSet;
 import com.sk89q.worldguard.chest.ChestProtection;
 import com.sk89q.worldguard.commands.CommandUtils;
 import com.sk89q.worldguard.config.YamlWorldConfiguration;
+import org.bukkit.NamespacedKey;
 import org.bukkit.potion.PotionEffectType;
 import org.yaml.snakeyaml.error.YAMLException;
 
@@ -299,7 +300,7 @@ public class BukkitWorldConfiguration extends YamlWorldConfiguration {
         explosionFlagCancellation = getBoolean("regions.explosion-flags-block-entity-damage", true);
         highFreqFlags = getBoolean("regions.high-frequency-flags", false);
         checkLiquidFlow = getBoolean("regions.protect-against-liquid-flow", false);
-        regionWand = convertLegacyItem(getString("regions.wand", ItemTypes.LEATHER.getKey().toString()));
+        regionWand = convertLegacyItem(getString("regions.wand", ItemTypes.LEATHER.id()));
         maxClaimVolume = getInt("regions.max-claim-volume", 30000);
         claimOnlyInsideExistingRegions = getBoolean("regions.claim-only-inside-existing-regions", false);
         setParentOnClaim = getString("regions.set-parent-on-claim", "");

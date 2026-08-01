@@ -137,7 +137,7 @@ public class ChestProtectionListener extends AbstractListener {
         final BukkitWorldConfiguration wcfg = getWorldConfig(event.getBlock().getWorld());
 
         if (wcfg.signChestProtection) {
-            if ("[Lock]".equalsIgnoreCase(event.getLine(0))) {
+            if ("[Lock]".equalsIgnoreCase(event.getLines()[0])) {
                 if (wcfg.isChestProtectedPlacement(BukkitAdapter.adapt(event.getBlock().getLocation()), WorldGuardPlugin.inst().wrapPlayer(player))) {
                     player.sendMessage(Component.text("You do not own the adjacent chest.").color(NamedTextColor.DARK_RED));
                     event.getBlock().breakNaturally();
@@ -153,7 +153,7 @@ public class ChestProtectionListener extends AbstractListener {
                     return;
                 }
 
-                if (!player.getName().equalsIgnoreCase(event.getLine(1))) {
+                if (!player.getName().equalsIgnoreCase(event.getLines()[1])) {
                     player.sendMessage(Component.text("The first owner line must be your name.").color(NamedTextColor.RED));
 
                     event.getBlock().breakNaturally();
@@ -172,11 +172,11 @@ public class ChestProtectionListener extends AbstractListener {
                     return;
                 }
 
-                event.setLine(0, "[Lock]");
+                event.line(0, Component.text("[Lock]"));
                 player.sendMessage(Component.text("A chest or double chest above is now protected.").color(NamedTextColor.YELLOW));
             }
         } else if (!wcfg.disableSignChestProtectionCheck) {
-            if ("[Lock]".equalsIgnoreCase(event.getLine(0))) {
+            if ("[Lock]".equalsIgnoreCase(event.getLines()[0])) {
                 player.sendMessage(Component.text("WorldGuard's sign chest protection is disabled.").color(NamedTextColor.RED));
 
                 event.getBlock().breakNaturally();

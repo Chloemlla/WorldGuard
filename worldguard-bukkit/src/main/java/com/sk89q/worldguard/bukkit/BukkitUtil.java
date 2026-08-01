@@ -40,6 +40,7 @@ public class BukkitUtil {
      * @param item the item to check
      * @return true if it's a water vial
      */
+    @SuppressWarnings("deprecation")
     public static boolean isWaterPotion(ItemStack item) {
         return (item.getDurability() & 0x3F) == 0;
     }
@@ -51,6 +52,7 @@ public class BukkitUtil {
      * @param item item
      * @return new bits
      */
+    @SuppressWarnings("deprecation")
     public static int getPotionEffectBits(ItemStack item) {
         return item.getDurability() & 0x3F;
     }

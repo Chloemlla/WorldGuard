@@ -27,10 +27,12 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class LoggingBlockPlaceEvent extends BlockPlaceEvent implements CancelLogging {
 
     private final CancelLogger logger = new CancelLogger();
 
+    @SuppressWarnings("removal")
     public LoggingBlockPlaceEvent(Block placedBlock, BlockState replacedBlockState, Block placedAgainst, ItemStack itemInHand, Player thePlayer, boolean canBuild) {
         super(placedBlock, replacedBlockState, placedAgainst, itemInHand, thePlayer, canBuild);
     }

@@ -26,20 +26,22 @@ import com.sk89q.worldguard.chest.SignChestProtection;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 
+@SuppressWarnings("deprecation")
 public class BukkitSignChestProtection extends SignChestProtection {
 
     private Boolean isProtectedSign(Sign sign, LocalPlayer player) {
-        if (sign.getLine(0).equalsIgnoreCase("[Lock]")) {
+        String[] lines = sign.getLines();
+        if (lines[0].equalsIgnoreCase("[Lock]")) {
             if (player == null) { // No player, no access
                 return true;
             }
-            
+
             String name = player.getName();
-            return !name.equalsIgnoreCase(sign.getLine(1).trim())
-                    && !name.equalsIgnoreCase(sign.getLine(2).trim())
-                    && !name.equalsIgnoreCase(sign.getLine(3).trim());
+            return !name.equalsIgnoreCase(lines[1].trim())
+                    && !name.equalsIgnoreCase(lines[2].trim())
+                    && !name.equalsIgnoreCase(lines[3].trim());
         }
-        
+
         return null;
     }
 

@@ -51,11 +51,11 @@ import io.papermc.lib.PaperLib;
 import io.papermc.paper.event.entity.EntityPushedByEntityAttackEvent;
 import io.papermc.paper.event.player.PlayerOpenSignEvent;
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
 import org.bukkit.ExplosionResult;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -584,7 +584,7 @@ public class EventAbstractionListener extends AbstractListener {
                         }
                     }
 
-                    if (event.isCancelled()) {
+                    if (event.useInteractedBlock() == Result.DENY) {
                         playDenyEffect(event.getPlayer(), clicked.getLocation().add(0.5, 1, 0.5));
                     }
                 }
@@ -984,6 +984,7 @@ public class EventAbstractionListener extends AbstractListener {
     }
 
     @EventHandler(ignoreCancelled = true)
+    @SuppressWarnings("deprecation")
     public void onPlayerPickupItem(PlayerPickupItemEvent event) {
         Item item = event.getItem();
         pickupDebounce.debounce(event.getPlayer(), item, event, new DestroyEntityEvent(event, create(event.getPlayer()), event.getItem()));
@@ -1335,13 +1336,13 @@ public class EventAbstractionListener extends AbstractListener {
     private static void playDenyEffect(Player player, Location location) {
         //player.playSound(location, Sound.SUCCESSFUL_HIT, 0.2f, 0.4f);
         if (getConfig().particleEffects) {
-            player.playEffect(location, Effect.SMOKE, BlockFace.UP);
+            player.spawnParticle(Particle.SMOKE, location, 5);
         }
     }
 
     private static void playDenyEffect(Location location) {
         if (getConfig().particleEffects) {
-            location.getWorld().playEffect(location, Effect.SMOKE, BlockFace.UP);
+            location.getWorld().spawnParticle(Particle.SMOKE, location, 5);
         }
     }
 

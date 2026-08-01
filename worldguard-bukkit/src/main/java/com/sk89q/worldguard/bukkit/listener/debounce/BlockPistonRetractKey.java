@@ -22,6 +22,7 @@ package com.sk89q.worldguard.bukkit.listener.debounce;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 
+@SuppressWarnings("deprecation")
 public class BlockPistonRetractKey {
 
     private final Block piston;
@@ -29,7 +30,7 @@ public class BlockPistonRetractKey {
 
     public BlockPistonRetractKey(BlockPistonRetractEvent event) {
         piston = event.getBlock();
-        retract = event.getRetractLocation().getBlock();
+        retract = event.getBlock().getRelative(event.getDirection(), 2);
     }
 
     @Override

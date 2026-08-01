@@ -165,7 +165,7 @@ public class WorldGuardBlockListener extends AbstractListener {
             Material targetId = blockTo.getType();
 
             if ((isAir || isWater) &&
-                    wcfg.preventWaterDamage.contains(BukkitAdapter.asBlockType(targetId).getId())) {
+                    wcfg.preventWaterDamage.contains(BukkitAdapter.asBlockType(targetId).id())) {
                 event.setCancelled(true);
                 return;
             }
@@ -174,7 +174,7 @@ public class WorldGuardBlockListener extends AbstractListener {
         if (!wcfg.allowedLavaSpreadOver.isEmpty() && isLava) {
             Material targetId = blockTo.getRelative(0, -1, 0).getType();
 
-            if (!wcfg.allowedLavaSpreadOver.contains(BukkitAdapter.asBlockType(targetId).getId())) {
+            if (!wcfg.allowedLavaSpreadOver.contains(BukkitAdapter.asBlockType(targetId).id())) {
                 event.setCancelled(true);
                 return;
             }
@@ -245,27 +245,27 @@ public class WorldGuardBlockListener extends AbstractListener {
             int z = block.getZ();
 
             Block neighbor = world.getBlockAt(x, y - 1, z);
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).id())) {
                 event.setCancelled(true);
                 return;
             }
             neighbor = world.getBlockAt(x + 1, y, z);
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).id())) {
                 event.setCancelled(true);
                 return;
             }
             neighbor = world.getBlockAt(x - 1, y, z);
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).id())) {
                 event.setCancelled(true);
                 return;
             }
             neighbor = world.getBlockAt(x, y, z - 1);
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).id())) {
                 event.setCancelled(true);
                 return;
             }
             neighbor = world.getBlockAt(x, y, z + 1);
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).id())) {
                 event.setCancelled(true);
                 return;
             }
@@ -331,7 +331,7 @@ public class WorldGuardBlockListener extends AbstractListener {
         if (!wcfg.disableFireSpreadBlocks.isEmpty()) {
             Block block = event.getBlock();
 
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(block.getType()).getId())) {
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(block.getType()).id())) {
                 event.setCancelled(true);
                 checkAndDestroyFireAround(block.getWorld(), block.getX(), block.getY(), block.getZ());
                 return;
@@ -546,7 +546,7 @@ public class WorldGuardBlockListener extends AbstractListener {
             if (!wcfg.allowedSnowFallOver.isEmpty()) {
                 Material targetId = event.getBlock().getRelative(0, -1, 0).getType();
 
-                if (!wcfg.allowedSnowFallOver.contains(BukkitAdapter.asBlockType(targetId).getId())) {
+                if (!wcfg.allowedSnowFallOver.contains(BukkitAdapter.asBlockType(targetId).id())) {
                     event.setCancelled(true);
                     return;
                 }

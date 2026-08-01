@@ -67,6 +67,7 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
+@SuppressWarnings("deprecation")
 public class WorldGuardCommands {
 
     private final WorldGuard worldGuard;
@@ -167,7 +168,7 @@ public class WorldGuardCommands {
         }
 
         if (threadName == null) {
-            threadFilter = new ThreadIdFilter(Thread.currentThread().getId());
+            threadFilter = new ThreadIdFilter(Thread.currentThread().threadId());
         } else if (threadName.equals("*")) {
             threadFilter = thread -> true;
         } else {

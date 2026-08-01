@@ -20,6 +20,7 @@
 package com.sk89q.worldguard.bukkit.listener;
 
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.util.formatting.text.TextComponent;
 import com.sk89q.worldedit.world.gamemode.GameMode;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
@@ -136,6 +137,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
     }
 
     @EventHandler(ignoreCancelled = true)
+    @SuppressWarnings("deprecation")
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         LocalPlayer localPlayer = getPlugin().wrapPlayer(player);
@@ -167,6 +169,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
     }
 
     @EventHandler(ignoreCancelled = true)
+    @SuppressWarnings("deprecation")
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player = event.getPlayer();
         ConfigurationManager cfg = getConfig();
@@ -273,9 +276,9 @@ public class WorldGuardPlayerListener extends AbstractListener {
                         }
                     }
 
-                    localPlayer.print("Applicable regions: " + str);
+                    localPlayer.print(TextComponent.of("Applicable regions: " + str));
                 } else {
-                    localPlayer.print("WorldGuard: No defined regions here!");
+                    localPlayer.print(TextComponent.of("WorldGuard: No defined regions here!"));
                 }
 
                 event.setUseItemInHand(Event.Result.DENY);
@@ -348,6 +351,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @SuppressWarnings({"deprecation", "removal"})
     public void onPlayerTeleport(PlayerTeleportEvent event) {
         if (event.getTo() == null) {
             // The target location for PlayerTeleportEvents can be null.
@@ -384,7 +388,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                         return;
                     }
                 }
-            } else if (event.getCause() == TeleportCause.CHORUS_FRUIT) {
+            } else if (event.getCause() == TeleportCause.CONSUMABLE_EFFECT) {
                 if (!WorldGuard.getInstance().getPlatform().getSessionManager().hasBypass(localPlayer, localPlayer.getWorld())) {
                     boolean cancel = false;
                     String message = null;
@@ -413,6 +417,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    @SuppressWarnings("deprecation")
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         LocalPlayer localPlayer = getPlugin().wrapPlayer(player);

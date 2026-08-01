@@ -41,6 +41,7 @@ import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedCuboidRegion;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
 import io.papermc.lib.PaperLib;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -150,7 +151,7 @@ public class WorldGuardEntityListener extends AbstractListener {
         WorldConfiguration wcfg = getWorldConfig(event.getEntity().getWorld());
 
         if (event instanceof PlayerDeathEvent && wcfg.disableDeathMessages) {
-            ((PlayerDeathEvent) event).setDeathMessage("");
+            ((PlayerDeathEvent) event).deathMessage(Component.empty());
         }
     }
 
@@ -691,6 +692,7 @@ public class WorldGuardEntityListener extends AbstractListener {
     }
 
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @SuppressWarnings("deprecation")
     public void onCreatePortal(PortalCreateEvent event) {
         WorldConfiguration wcfg = getWorldConfig(event.getWorld());
 
@@ -909,6 +911,7 @@ public class WorldGuardEntityListener extends AbstractListener {
 
     private static class SpigotListener implements Listener {
         @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        @SuppressWarnings("deprecation")
         public void onPigZap(PigZapEvent event) {
             handlePigZap(event.getEntity(), event);
         }

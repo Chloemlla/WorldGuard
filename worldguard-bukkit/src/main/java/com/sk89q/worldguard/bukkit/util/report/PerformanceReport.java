@@ -30,7 +30,7 @@ import org.bukkit.entity.Entity;
 import java.util.List;
 import java.util.Map;
 
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "removal"})
 public class PerformanceReport extends DataReport {
 
     public PerformanceReport() {

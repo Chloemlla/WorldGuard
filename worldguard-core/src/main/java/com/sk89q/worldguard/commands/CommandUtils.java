@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 /**
  * Command-related utility methods.
  */
+@SuppressWarnings("deprecation")
 public final class CommandUtils {
 
     private CommandUtils() {
@@ -81,8 +82,8 @@ public final class CommandUtils {
         // FIXME: workaround for https://github.com/KyoriPowered/text/issues/50
         // remove when fixed upstream and updated in WorldEdit
         str = Arrays.stream(str.split("\n")).map(line -> {
-            TextComponent comp = LegacyComponentSerializer.INSTANCE.deserialize(line, '&');
-            return LegacyComponentSerializer.INSTANCE.serialize(comp);
+            TextComponent comp = LegacyComponentSerializer.legacySection().deserialize(line, '&');
+            return LegacyComponentSerializer.legacySection().serialize(comp);
         }).collect(Collectors.joining("\n"));
 
         return str;
@@ -114,7 +115,7 @@ public final class CommandUtils {
      */
     public static Function<String, ?> messageFunction(final Actor sender) {
         return s -> {
-            sender.printRaw(s);
+            sender.print(TextComponent.of(s));
             return null;
         };
     }

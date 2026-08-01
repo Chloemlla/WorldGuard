@@ -28,6 +28,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class LoggingPlayerInteractEvent extends PlayerInteractEvent implements CancelLogging {
 
     private final CancelLogger logger = new CancelLogger();
@@ -55,7 +56,7 @@ public class LoggingPlayerInteractEvent extends PlayerInteractEvent implements C
 
     @Override
     public void setCancelled(boolean cancel) {
-        this.logger.log(isCancelled(), cancel, new Exception().getStackTrace());
+        this.logger.log(useInteractedBlock() == Result.DENY, cancel, new Exception().getStackTrace());
         super.setCancelled(cancel);
     }
 

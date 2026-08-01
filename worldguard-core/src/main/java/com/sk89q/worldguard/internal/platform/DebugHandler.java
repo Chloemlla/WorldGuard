@@ -23,6 +23,7 @@ import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldguard.LocalPlayer;
 
+@SuppressWarnings("deprecation")
 public interface DebugHandler {
 
     void testBreak(Actor sender, LocalPlayer target, boolean fromTarget, boolean stackTraceMode) throws CommandException;

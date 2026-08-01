@@ -24,10 +24,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.List;
 
+@SuppressWarnings("deprecation")
 public class LoggingEntityDamageByEntityEvent extends EntityDamageByEntityEvent implements CancelLogging {
 
     private final CancelLogger logger = new CancelLogger();
 
+    @SuppressWarnings("removal")
     public LoggingEntityDamageByEntityEvent(Entity damager, Entity damagee, DamageCause cause, double damage) {
         super(damager, damagee, cause, damage);
     }

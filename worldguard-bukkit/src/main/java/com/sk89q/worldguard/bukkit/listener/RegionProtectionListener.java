@@ -21,6 +21,7 @@ package com.sk89q.worldguard.bukkit.listener;
 
 import com.google.common.base.Predicate;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldedit.util.formatting.text.TextComponent;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -99,6 +100,7 @@ public class RegionProtectionListener extends AbstractListener {
      * @param location the location
      * @param what what was done
      */
+    @SuppressWarnings("deprecation")
     private void tellErrorMessage(DelegateEvent event, Cause cause, Location location, String what) {
         if (event.isSilent() || cause.isIndirect()) {
             return;
@@ -125,7 +127,7 @@ public class RegionProtectionListener extends AbstractListener {
         if (message == null || message.isEmpty()) return;
         message = WorldGuard.getInstance().getPlatform().getMatcher().replaceMacros(localPlayer, message);
         message = CommandUtils.replaceColorMacros(message);
-        localPlayer.printRaw(message.replace("%what%", what));
+        localPlayer.print(TextComponent.of(message.replace("%what%", what)));
     }
 
     /**

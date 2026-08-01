@@ -36,6 +36,7 @@ import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
 
+@SuppressWarnings("deprecation")
 public class WorldGuardWeatherListener extends AbstractListener {
 
     public WorldGuardWeatherListener(WorldGuardPlugin plugin) {
@@ -82,7 +83,7 @@ public class WorldGuardWeatherListener extends AbstractListener {
             if (targetId == Material.AIR) {
                 targetId = target.getRelative(BlockFace.DOWN).getType();
             }
-            if (wcfg.disallowedLightningBlocks.contains(BukkitAdapter.asBlockType(targetId).getId())) {
+            if (wcfg.disallowedLightningBlocks.contains(BukkitAdapter.asBlockType(targetId).id())) {
                 event.setCancelled(true);
             }
         }
