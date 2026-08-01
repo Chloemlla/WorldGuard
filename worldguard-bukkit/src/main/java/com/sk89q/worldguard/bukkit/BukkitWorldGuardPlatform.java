@@ -84,7 +84,7 @@ public class BukkitWorldGuardPlatform implements WorldGuardPlatform {
 
     @Override
     public String getPlatformVersion() {
-        return WorldGuardPlugin.inst().getDescription().getVersion();
+        return WorldGuardPlugin.inst().getPluginMeta().getVersion();
     }
 
     @Override

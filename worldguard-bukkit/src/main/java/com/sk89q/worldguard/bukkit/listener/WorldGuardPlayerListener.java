@@ -39,7 +39,8 @@ import com.sk89q.worldguard.session.handler.GameModeFlag;
 import com.sk89q.worldguard.util.Entities;
 import com.sk89q.worldguard.util.command.CommandFilter;
 import com.sk89q.worldguard.util.profile.Profile;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -108,8 +109,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
         WorldConfiguration wcfg = getWorldConfig(world);
 
         if (cfg.activityHaltToggle) {
-            player.sendMessage(ChatColor.YELLOW
-                    + "Intensive server activity has been HALTED.");
+            player.sendMessage(Component.text("Intensive server activity has been HALTED.").color(NamedTextColor.YELLOW));
 
             int removed = 0;
 
@@ -127,8 +127,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
         }
 
         if (wcfg.fireSpreadDisableToggle) {
-            player.sendMessage(ChatColor.YELLOW
-                    + "Fire spread is currently globally disabled for this world.");
+            player.sendMessage(Component.text("Fire spread is currently globally disabled for this world.").color(NamedTextColor.YELLOW));
         }
 
         Events.fire(new ProcessPlayerEvent(player));
@@ -221,7 +220,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
             ItemStack heldItem = player.getInventory().getItem(slot);
             if (heldItem != null && heldItem.getAmount() < 0) {
                 player.getInventory().setItem(slot, null);
-                player.sendMessage(ChatColor.RED + "Infinite stack removed.");
+                player.sendMessage(Component.text("Infinite stack removed.").color(NamedTextColor.RED));
             }
         }
     }
@@ -252,7 +251,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                 ItemStack heldItem = player.getInventory().getItem(slot);
                 if (heldItem != null && heldItem.getAmount() < 0) {
                     player.getInventory().setItem(slot, null);
-                    player.sendMessage(ChatColor.RED + "Infinite stack in slot #" + slot + " removed.");
+                    player.sendMessage(Component.text("Infinite stack in slot #" + slot + " removed.").color(NamedTextColor.RED));
                 }
             }
         }
@@ -264,7 +263,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
                 ApplicableRegionSet set = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery()
                         .getApplicableRegions(BukkitAdapter.adapt(block.getLocation()), RegionQuery.QueryOption.SORT);
                 if (set.size() > 0) {
-                    player.sendMessage(ChatColor.YELLOW + "Can you build? " + (set.testState(localPlayer, Flags.BUILD) ? "Yes" : "No"));
+                    player.sendMessage(Component.text("Can you build? " + (set.testState(localPlayer, Flags.BUILD) ? "Yes" : "No")).color(NamedTextColor.YELLOW));
 
                     StringBuilder str = new StringBuilder();
                     for (Iterator<ProtectedRegion> it = set.iterator(); it.hasNext();) {
@@ -343,7 +342,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
             ItemStack heldItem = player.getInventory().getItem(newSlot);
             if (heldItem != null && heldItem.getAmount() < 0) {
                 player.getInventory().setItem(newSlot, null);
-                player.sendMessage(ChatColor.RED + "Infinite stack removed.");
+                player.sendMessage(Component.text("Infinite stack removed.").color(NamedTextColor.RED));
             }
         }
     }
@@ -438,7 +437,7 @@ public class WorldGuardPlayerListener extends AbstractListener {
 
         if (cfg.blockInGameOp) {
             if (opPattern.matcher(event.getMessage()).matches()) {
-                player.sendMessage(ChatColor.RED + "/op and /deop can only be used in console (as set by a WG setting).");
+                player.sendMessage(Component.text("/op and /deop can only be used in console (as set by a WG setting).").color(NamedTextColor.RED));
                 event.setCancelled(true);
                 return;
             }

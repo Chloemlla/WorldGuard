@@ -83,7 +83,8 @@ import org.bstats.charts.DrilldownPie;
 import org.bstats.charts.SimplePie;
 import org.bstats.charts.SingleLineChart;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -322,16 +323,16 @@ public class WorldGuardPlugin extends JavaPlugin {
                 throw t;
             }
         } catch (CommandPermissionsException e) {
-            sender.sendMessage(ChatColor.RED + "You don't have permission.");
+            sender.sendMessage(Component.text("You don't have permission.").color(NamedTextColor.RED));
         } catch (MissingNestedCommandException e) {
-            sender.sendMessage(ChatColor.RED + e.getUsage());
+            sender.sendMessage(Component.text(e.getUsage()).color(NamedTextColor.RED));
         } catch (CommandUsageException e) {
-            sender.sendMessage(ChatColor.RED + e.getMessage());
-            sender.sendMessage(ChatColor.RED + e.getUsage());
+            sender.sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
+            sender.sendMessage(Component.text(e.getUsage()).color(NamedTextColor.RED));
         } catch (WrappedCommandException e) {
-            sender.sendMessage(ChatColor.RED + e.getCause().getMessage());
+            sender.sendMessage(Component.text(e.getCause().getMessage()).color(NamedTextColor.RED));
         } catch (CommandException e) {
-            sender.sendMessage(ChatColor.RED + e.getMessage());
+            sender.sendMessage(Component.text(e.getMessage()).color(NamedTextColor.RED));
         }
 
         return true;

@@ -35,8 +35,9 @@ import com.sk89q.worldguard.bukkit.event.debug.LoggingEntityDamageByEntityEvent;
 import com.sk89q.worldguard.bukkit.event.debug.LoggingPlayerInteractEvent;
 import com.sk89q.worldguard.bukkit.util.report.CancelReport;
 import com.sk89q.worldguard.internal.platform.DebugHandler;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -81,7 +82,7 @@ public class BukkitDebugHandler implements DebugHandler {
             }
 
             target.sendMessage(
-                    ChatColor.RED + "(Please ignore any messages that may immediately follow.)");
+                    Component.text("(Please ignore any messages that may immediately follow.)").color(NamedTextColor.RED));
         }
 
         Bukkit.getPluginManager().callEvent(event);
@@ -91,17 +92,17 @@ public class BukkitDebugHandler implements DebugHandler {
         String result = report.toString();
 
         if (stacktraceMode) {
-            receiver.sendMessage(ChatColor.GRAY + "The report was printed to console.");
+            receiver.sendMessage(Component.text("The report was printed to console.").color(NamedTextColor.GRAY));
             log.info("Event report for " + receiver.getName() + ":\n\n" + result);
 
             plugin.checkPermission(receiver, "worldguard.debug.pastebin");
             ActorCallbackPaste.pastebin(WorldGuard.getInstance().getSupervisor(), plugin.wrapCommandSender(receiver),
                     result, "Event debugging report: %s.txt");
         } else {
-            receiver.sendMessage(result.replaceAll("(?m)^", ChatColor.AQUA.toString()));
+            receiver.sendMessage(Component.text(result).color(NamedTextColor.AQUA));
 
             if (result.length() >= 500 && !isConsole) {
-                receiver.sendMessage(ChatColor.GRAY + "The report was also printed to console.");
+                receiver.sendMessage(Component.text("The report was also printed to console.").color(NamedTextColor.GRAY));
                 log.info("Event report for " + receiver.getName() + ":\n\n" + result);
             }
         }
@@ -203,7 +204,7 @@ public class BukkitDebugHandler implements DebugHandler {
 
         Block block = traceBlock(bukkitSender, bukkitTarget, fromTarget);
         sender.print(TextComponent.of("Testing BLOCK PLACE at ", TextColor.AQUA).append(TextComponent.of(block.toString(), TextColor.DARK_AQUA)));
-        LoggingBlockPlaceEvent event = new LoggingBlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), bukkitTarget.getItemInHand(), bukkitTarget, true);
+        LoggingBlockPlaceEvent event = new LoggingBlockPlaceEvent(block, block.getState(), block.getRelative(BlockFace.DOWN), bukkitTarget.getItemInMainHand(), bukkitTarget, true);
         testEvent(bukkitSender, bukkitTarget, event, stackTraceMode);
     }
 
@@ -214,7 +215,7 @@ public class BukkitDebugHandler implements DebugHandler {
 
         Block block = traceBlock(bukkitSender, bukkitTarget, fromTarget);
         sender.print(TextComponent.of("Testing BLOCK INTERACT at ", TextColor.AQUA).append(TextComponent.of(block.toString(), TextColor.DARK_AQUA)));
-        LoggingPlayerInteractEvent event = new LoggingPlayerInteractEvent(bukkitTarget, Action.RIGHT_CLICK_BLOCK, bukkitTarget.getItemInHand(), block, BlockFace.SOUTH);
+        LoggingPlayerInteractEvent event = new LoggingPlayerInteractEvent(bukkitTarget, Action.RIGHT_CLICK_BLOCK, bukkitTarget.getItemInMainHand(), block, BlockFace.SOUTH);
         testEvent(bukkitSender, bukkitTarget, event, stackTraceMode);
     }
 
