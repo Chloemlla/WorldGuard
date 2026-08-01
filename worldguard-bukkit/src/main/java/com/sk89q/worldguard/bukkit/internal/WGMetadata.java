@@ -19,69 +19,81 @@
 
 package com.sk89q.worldguard.bukkit.internal;
 
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.metadata.Metadatable;
+import org.bukkit.entity.Entity;
 
 import javax.annotation.Nullable;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Utility methods for dealing with metadata on entities.
  *
- * <p>WorldGuard is placed as the owner of all values.</p>
+ * <p>Replaces the deprecated Bukkit Metadata API with a UUID-based map.</p>
  */
 public final class WGMetadata {
+
+    private static final Map<UUID, Map<String, Object>> METADATA_MAP = new HashMap<>();
 
     private WGMetadata() {
     }
 
     /**
-     * Add some metadata to a target.
+     * Add some metadata to an entity.
      *
-     * @param target the target
+     * @param target the entity
      * @param key the key
      * @param value the value
      */
-    public static void put(Metadatable target, String key, Object value) {
-        target.setMetadata(key, new FixedMetadataValue(WorldGuardPlugin.inst(), value));
+    public static void put(Entity target, String key, Object value) {
+        METADATA_MAP.computeIfAbsent(target.getUniqueId(), k -> new HashMap<>()).put(key, value);
     }
 
     /**
-     * Get the (first) metadata value on the given target that has the given
-     * key and is of the given class type.
+     * Get metadata value from an entity.
      *
-     * @param target the target
+     * @param target the entity
      * @param key the key
      * @param expected the type of the value
      * @param <T> the type of the value
-     * @return a value, or {@code null} if one does not exists
+     * @return a value, or {@code null} if one does not exist
      */
     @Nullable
     @SuppressWarnings("unchecked")
-    public static <T> T getIfPresent(Metadatable target, String key, Class<T> expected) {
-        List<MetadataValue> values = target.getMetadata(key);
-        WorldGuardPlugin owner = WorldGuardPlugin.inst();
-        for (MetadataValue value : values) {
-            if (value.getOwningPlugin() == owner) {
-                Object v = value.value();
-                if (expected.isInstance(v)) {
-                    return (T) v;
-                }
-            }
+    public static <T> T getIfPresent(Entity target, String key, Class<T> expected) {
+        Map<String, Object> entityData = METADATA_MAP.get(target.getUniqueId());
+        if (entityData == null) {
+            return null;
         }
-
+        Object value = entityData.get(key);
+        if (expected.isInstance(value)) {
+            return (T) value;
+        }
         return null;
     }
 
     /**
-     * Removes metadata from the target.
+     * Removes metadata from an entity.
      *
-     * @param target the target
+     * @param target the entity
      * @param key the key
      */
-    public static void remove(Metadatable target, String key) {
-        target.removeMetadata(key, WorldGuardPlugin.inst());
+    public static void remove(Entity target, String key) {
+        Map<String, Object> entityData = METADATA_MAP.get(target.getUniqueId());
+        if (entityData != null) {
+            entityData.remove(key);
+            if (entityData.isEmpty()) {
+                METADATA_MAP.remove(target.getUniqueId());
+            }
+        }
+    }
+
+    /**
+     * Clean up metadata for an entity (e.g. on entity removal).
+     *
+     * @param target the entity
+     */
+    public static void removeAll(Entity target) {
+        METADATA_MAP.remove(target.getUniqueId());
     }
 }

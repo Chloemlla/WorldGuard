@@ -66,6 +66,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("deprecation")
 public class BukkitWorldGuardPlatform implements WorldGuardPlatform {
 
     private BukkitSessionManager sessionManager;

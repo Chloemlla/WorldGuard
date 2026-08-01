@@ -237,6 +237,7 @@ public class EventAbstractionListener extends AbstractListener {
     }
 
     @EventHandler(ignoreCancelled = true)
+    @SuppressWarnings("deprecation")
     public void onBlockPlace(BlockPlaceEvent event) {
         if (event instanceof BlockMultiPlaceEvent) return;
         BlockState previousState = event.getBlockReplacedState();

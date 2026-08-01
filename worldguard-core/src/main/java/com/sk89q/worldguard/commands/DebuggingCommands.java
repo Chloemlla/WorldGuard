@@ -27,6 +27,7 @@ import com.sk89q.worldedit.extension.platform.Actor;
 import com.sk89q.worldguard.LocalPlayer;
 import com.sk89q.worldguard.WorldGuard;
 
+@SuppressWarnings("deprecation")
 public class DebuggingCommands {
 
     private final WorldGuard worldGuard;

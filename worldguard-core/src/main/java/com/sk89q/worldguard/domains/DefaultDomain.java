@@ -45,6 +45,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * A combination of a {@link PlayerDomain} and a {@link GroupDomain}.
  */
+@SuppressWarnings("deprecation")
 public class DefaultDomain implements Domain, ChangeTracked {
 
     private PlayerDomain playerDomain = new PlayerDomain();

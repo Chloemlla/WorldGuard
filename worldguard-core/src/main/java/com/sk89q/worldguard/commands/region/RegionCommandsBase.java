@@ -59,6 +59,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("deprecation")
 class RegionCommandsBase {
 
     protected RegionCommandsBase() {

@@ -35,6 +35,7 @@ import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("deprecation")
 public class WorldGuardExceptionConverter extends ExceptionConverterHelper {
 
     private static final Pattern numberFormat = Pattern.compile("^For input string: \"(.*)\"$");

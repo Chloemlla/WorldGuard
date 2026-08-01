@@ -32,6 +32,7 @@ import org.bukkit.BanList.Type;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+@SuppressWarnings("deprecation")
 public class BukkitPlayer extends com.sk89q.worldedit.bukkit.BukkitPlayer implements LocalPlayer {
 
     protected final WorldGuardPlugin plugin;

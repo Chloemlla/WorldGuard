@@ -23,6 +23,7 @@ import com.sk89q.worldedit.util.report.DataReport;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 
+@SuppressWarnings("deprecation")
 public class PluginReport extends DataReport {
 
     public PluginReport() {

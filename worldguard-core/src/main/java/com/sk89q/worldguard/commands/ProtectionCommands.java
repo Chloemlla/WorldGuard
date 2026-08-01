@@ -27,6 +27,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.commands.region.MemberCommands;
 import com.sk89q.worldguard.commands.region.RegionCommands;
 
+@SuppressWarnings("deprecation")
 public class ProtectionCommands {
     @SuppressWarnings("unused")
     private final WorldGuard worldGuard;

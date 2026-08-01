@@ -107,6 +107,7 @@ import java.util.logging.Logger;
 /**
  * The main class for WorldGuard as a Bukkit plugin.
  */
+@SuppressWarnings("deprecation")
 public class WorldGuardPlugin extends JavaPlugin {
 
     private static final org.apache.logging.log4j.Logger LOGGER = LogManagerCompat.getLogger();

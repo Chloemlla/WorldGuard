@@ -32,6 +32,7 @@ import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.session.Session;
 import com.sk89q.worldguard.session.handler.GodMode;
 
+@SuppressWarnings("deprecation")
 public class GeneralCommands {
     private final WorldGuard worldGuard;
 

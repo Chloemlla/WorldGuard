@@ -52,6 +52,7 @@ import org.bukkit.util.BlockIterator;
 
 import java.util.logging.Logger;
 
+@SuppressWarnings("deprecation")
 public class BukkitDebugHandler implements DebugHandler {
 
     private static final Logger log = Logger.getLogger(BukkitDebugHandler.class.getCanonicalName());

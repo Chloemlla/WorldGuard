@@ -43,7 +43,6 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.entity.TNTPrimed;
 import org.bukkit.entity.Tameable;
 import org.bukkit.entity.Vehicle;
-import org.bukkit.metadata.Metadatable;
 import org.bukkit.projectiles.BlockProjectileSource;
 import org.bukkit.projectiles.ProjectileSource;
 
@@ -240,31 +239,21 @@ public final class Cause {
     }
 
     /**
-     * Add a parent cause to a {@code Metadatable} object.
+     * Add a parent cause to an {@code Entity} object.
      *
-     * <p>Note that {@code target} cannot be an instance of
-     * {@link Block} because {@link #create(Object...)} will not bother
-     * checking for such data on blocks (because it is relatively costly
-     * to do so).</p>
-     *
-     * @param target the target
+     * @param target the target entity
      * @param parent the parent cause
-     * @throws IllegalArgumentException thrown if {@code target} is an instance of {@link Block}
      */
-    public static void trackParentCause(Metadatable target, Object parent) {
-        if (target instanceof Block) {
-            throw new IllegalArgumentException("Can't track causes on Blocks because Cause doesn't check block metadata");
-        }
-
+    public static void trackParentCause(Entity target, Object parent) {
         WGMetadata.put(target, CAUSE_KEY, parent);
     }
 
     /**
-     * Remove a parent cause from a {@code Metadatable} object.
+     * Remove a parent cause from an {@code Entity} object.
      *
-     * @param target the target
+     * @param target the target entity
      */
-    public static void untrackParentCause(Metadatable target) {
+    public static void untrackParentCause(Entity target) {
         WGMetadata.remove(target, CAUSE_KEY);
     }
 
@@ -348,8 +337,8 @@ public final class Cause {
                 // Add manually tracked parent causes
                 Object source = o;
                 int index = causes.size();
-                while (source instanceof Metadatable && !(source instanceof Block)) {
-                    source = WGMetadata.getIfPresent((Metadatable) source, CAUSE_KEY, Object.class);
+                while (source instanceof Entity && !(source instanceof Block)) {
+                    source = WGMetadata.getIfPresent((Entity) source, CAUSE_KEY, Object.class);
                     if (source != null) {
                         causes.add(index, source);
                         seen.add(source);

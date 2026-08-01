@@ -92,6 +92,7 @@ import java.util.stream.Collectors;
 /**
  * Implements the /region commands for WorldGuard.
  */
+@SuppressWarnings("deprecation")
 public final class RegionCommands extends RegionCommandsBase {
 
     private static final Logger log = Logger.getLogger(RegionCommands.class.getCanonicalName());

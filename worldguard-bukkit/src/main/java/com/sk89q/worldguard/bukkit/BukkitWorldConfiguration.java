@@ -58,6 +58,7 @@ import java.util.logging.Level;
  * @author sk89q
  * @author Michael
  */
+@SuppressWarnings("deprecation")
 public class BukkitWorldConfiguration extends YamlWorldConfiguration {
 
     private static final TargetMatcherParser matcherParser = new TargetMatcherParser();
@@ -167,7 +168,7 @@ public class BukkitWorldConfiguration extends YamlWorldConfiguration {
 
         blockPotions = new HashSet<>();
         for (String potionName : getStringList("gameplay.block-potions", null)) {
-            PotionEffectType effect = PotionEffectType.getByName(potionName);
+            PotionEffectType effect = PotionEffectType.getByKey(NamespacedKey.fromString(potionName.toLowerCase()));
 
             if (effect == null) {
                 log.warning("Unknown potion effect type '" + potionName + "'");
@@ -298,7 +299,7 @@ public class BukkitWorldConfiguration extends YamlWorldConfiguration {
         explosionFlagCancellation = getBoolean("regions.explosion-flags-block-entity-damage", true);
         highFreqFlags = getBoolean("regions.high-frequency-flags", false);
         checkLiquidFlow = getBoolean("regions.protect-against-liquid-flow", false);
-        regionWand = convertLegacyItem(getString("regions.wand", ItemTypes.LEATHER.getId()));
+        regionWand = convertLegacyItem(getString("regions.wand", ItemTypes.LEATHER.getKey().toString()));
         maxClaimVolume = getInt("regions.max-claim-volume", 30000);
         claimOnlyInsideExistingRegions = getBoolean("regions.claim-only-inside-existing-regions", false);
         setParentOnClaim = getString("regions.set-parent-on-claim", "");

@@ -24,6 +24,7 @@ import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 
+@SuppressWarnings("deprecation")
 public class ServerReport extends DataReport {
 
     public ServerReport() {

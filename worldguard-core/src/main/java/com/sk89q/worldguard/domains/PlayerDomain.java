@@ -32,6 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Stores players (only) in a domain.
  */
+@SuppressWarnings("deprecation")
 public class PlayerDomain implements Domain, ChangeTracked {
 
     private final Set<UUID> uniqueIds = new CopyOnWriteArraySet<>();

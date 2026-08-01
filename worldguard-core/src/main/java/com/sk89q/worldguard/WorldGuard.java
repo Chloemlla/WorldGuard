@@ -46,6 +46,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("deprecation")
 public final class WorldGuard {
 
     public static final Logger logger = Logger.getLogger(WorldGuard.class.getCanonicalName());

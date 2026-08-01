@@ -32,6 +32,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /**
  * Contains groups in a domain.
  */
+@SuppressWarnings("deprecation")
 public class GroupDomain implements Domain, ChangeTracked {
 
     private final Set<String> groups = new CopyOnWriteArraySet<>();
