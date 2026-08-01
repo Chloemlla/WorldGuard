@@ -244,11 +244,28 @@ public class WorldGuardBlockListener extends AbstractListener {
             int y = block.getY();
             int z = block.getZ();
 
-            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(world.getBlockAt(x, y - 1, z).getType()).getId())
-                    || wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(world.getBlockAt(x + 1, y, z).getType()).getId())
-                    || wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(world.getBlockAt(x - 1, y, z).getType()).getId())
-                    || wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(world.getBlockAt(x, y, z - 1).getType()).getId())
-                    || wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(world.getBlockAt(x, y, z + 1).getType()).getId())) {
+            Block neighbor = world.getBlockAt(x, y - 1, z);
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+                event.setCancelled(true);
+                return;
+            }
+            neighbor = world.getBlockAt(x + 1, y, z);
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+                event.setCancelled(true);
+                return;
+            }
+            neighbor = world.getBlockAt(x - 1, y, z);
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+                event.setCancelled(true);
+                return;
+            }
+            neighbor = world.getBlockAt(x, y, z - 1);
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
+                event.setCancelled(true);
+                return;
+            }
+            neighbor = world.getBlockAt(x, y, z + 1);
+            if (wcfg.disableFireSpreadBlocks.contains(BukkitAdapter.asBlockType(neighbor.getType()).getId())) {
                 event.setCancelled(true);
                 return;
             }
