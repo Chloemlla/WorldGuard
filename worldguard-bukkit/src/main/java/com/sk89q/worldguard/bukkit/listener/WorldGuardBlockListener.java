@@ -23,6 +23,8 @@ import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.BukkitWorldConfiguration;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.bukkit.listener.debounce.BlockRedstoneKey;
+import com.sk89q.worldguard.bukkit.listener.debounce.EventDebounce;
 import com.sk89q.worldguard.bukkit.util.Materials;
 import com.sk89q.worldguard.config.ConfigurationManager;
 import com.sk89q.worldguard.config.WorldConfiguration;
@@ -33,6 +35,7 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.util.SpongeUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Tag;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Waterlogged;
@@ -66,6 +69,8 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class WorldGuardBlockListener extends AbstractListener {
 
+    private final EventDebounce<BlockRedstoneKey> redstoneDebounce = EventDebounce.create(5000);
+    private final EventDebounce<BlockRedstoneKey> liquidFlowDebounce = EventDebounce.create(5000);
 
     /**
      * Construct the object.
@@ -119,6 +124,12 @@ public class WorldGuardBlockListener extends AbstractListener {
         WorldConfiguration wcfg = getWorldConfig(world);
 
         if (wcfg.simulateSponge && isWater) {
+            // Debounce: liquid flow events are high-frequency; only check
+            // for sponges once per 5-second window per target block.
+            if (liquidFlowDebounce.getIfNotPresent(new BlockRedstoneKey(blockTo)) == null) {
+                return;
+            }
+
             int ox = blockTo.getX();
             int oy = blockTo.getY();
             int oz = blockTo.getZ();
@@ -341,8 +352,9 @@ public class WorldGuardBlockListener extends AbstractListener {
     }
 
     private void checkAndDestroyFire(World world, int x, int y, int z) {
-        if (Materials.isFire(world.getBlockAt(x, y, z).getType())) {
-            world.getBlockAt(x, y, z).setType(Material.AIR);
+        Block block = world.getBlockAt(x, y, z);
+        if (Materials.isFire(block.getType())) {
+            block.setType(Material.AIR);
         }
     }
 
@@ -409,6 +421,8 @@ public class WorldGuardBlockListener extends AbstractListener {
 
     /*
      * Called when redstone changes.
+     * Debounced to avoid server lag from rapid redstone fluctuations
+     * (e.g. 300 arrows on a pressure plate triggering repeated sponge checks).
      */
     @EventHandler(priority = EventPriority.HIGH)
     public void onBlockRedstoneChange(BlockRedstoneEvent event) {
@@ -418,6 +432,10 @@ public class WorldGuardBlockListener extends AbstractListener {
         WorldConfiguration wcfg = getWorldConfig(world);
 
         if (wcfg.simulateSponge && wcfg.redstoneSponges) {
+            if (redstoneDebounce.getIfNotPresent(new BlockRedstoneKey(blockTo)) == null) {
+                return;
+            }
+
             int ox = blockTo.getX();
             int oy = blockTo.getY();
             int oz = blockTo.getZ();
