@@ -80,6 +80,7 @@ public final class Materials {
         ENTITY_ITEMS.put(EntityType.EGG, Material.EGG);
         ENTITY_ITEMS.put(EntityType.ARMOR_STAND, Material.ARMOR_STAND);
         ENTITY_ITEMS.put(EntityType.END_CRYSTAL, Material.END_CRYSTAL);
+        ENTITY_ITEMS.put(EntityType.CUSHION, Material.WHITE_CUSHION);
 
         // All boat items should have an entity equivalent, so we can use the tag to map them out.
         Tag.ITEMS_BOATS.getValues().forEach(mat -> {
@@ -488,6 +489,7 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.SUGAR, 0);
         MATERIAL_FLAGS.put(Material.COOKIE, 0);
         MATERIAL_FLAGS.put(Material.MAP, 0);
+        putMaterialTag(Tag.ITEMS_CLONABLE_MAPS, 0);
         MATERIAL_FLAGS.put(Material.SHEARS, 0);
         MATERIAL_FLAGS.put(Material.MELON_SLICE, 0);
         MATERIAL_FLAGS.put(Material.PUMPKIN_SEEDS, 0);
@@ -601,6 +603,7 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.TRIDENT, 0);
         MATERIAL_FLAGS.put(Material.TROPICAL_FISH, 0);
         MATERIAL_FLAGS.put(Material.TROPICAL_FISH_BUCKET, 0);
+        MATERIAL_FLAGS.put(Material.SULFUR_CUBE_BUCKET, 0);
 
         MATERIAL_FLAGS.put(Material.CREEPER_BANNER_PATTERN, 0);
         MATERIAL_FLAGS.put(Material.FLOWER_BANNER_PATTERN, 0);
@@ -746,6 +749,7 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.MOSS_BLOCK, 0);
         MATERIAL_FLAGS.put(Material.HANGING_ROOTS, 0);
         MATERIAL_FLAGS.put(Material.POINTED_DRIPSTONE, 0);
+        MATERIAL_FLAGS.put(Material.DRIPSTONE_BLOCK, 0);
 
         // 1.19
         MATERIAL_FLAGS.put(Material.MUD, 0);
@@ -946,6 +950,12 @@ public final class Materials {
         MATERIAL_FLAGS.put(Material.SULFUR_BRICKS, 0);
         MATERIAL_FLAGS.put(Material.CHISELED_SULFUR, 0);
         putMaterialTag(Tag.SPELEOTHEMS, 0);
+
+        // 26.3
+        MATERIAL_FLAGS.put(Material.RED_SHRUB, 0);
+        MATERIAL_FLAGS.put(Material.STRAW_BED, MODIFIED_ON_RIGHT);
+        MATERIAL_FLAGS.put(Material.SHELF_MUSHROOM, 0);
+        putMaterialTag(Tag.ITEMS_CUSHIONS, 0);
 
         Stream.concat(Stream.concat(
                 Tag.CORAL_BLOCKS.getValues().stream(),
